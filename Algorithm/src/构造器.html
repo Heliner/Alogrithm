@@ -1,0 +1,22 @@
+//直接量化方式创建对象
+
+function f1(){
+	var student={"name":"张三","age":23,"work":function(){alert("这是我的工作！！！")}};
+}
+//内置构造器创建对象
+function f2(){
+	var teacher = new Object();
+	teacher.name="a";
+	teacher.work=function(){
+		alert("这是我的工作！！！");
+	}
+}
+
+function Coder(name,work){
+	this.name = name;
+	this.work=work;
+}
+
+function f3(){
+	function c = new Coder(name,function(){alert("这是alert")});
+}

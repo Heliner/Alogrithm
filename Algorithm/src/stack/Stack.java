@@ -3,6 +3,8 @@ package stack;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.junit.Test;
+
 public class Stack<Item> implements Iterable<Item> {
 	private int size;
 	private Node<Item> first;
@@ -121,6 +123,26 @@ public class Stack<Item> implements Iterable<Item> {
 			return item;
 		}
 	}
-	
+	@Test
+	public void test() {
+		Stack<Integer> stack = new Stack<Integer>();
+		System.out.println(stack.isEmpty()?"Empty":"Not Empty");
+		stack.push_back(1);
+		stack.push_back(2);
+		stack.push_back(3);
+		stack.push_back(4);
+		stack.push_back(5);
+		Iterator<Integer> iterator = stack.iterator();
+		while(iterator.hasNext()){
+			System.out.println(iterator.next());;
+		}
+		stack.pop_back();
+		stack.pop_back();
+		stack.pop_back();
+		stack.pop_back();
+		stack.pop_back();
+		System.out.println(stack.isEmpty()?"Empty":"Not Empty");
+		
+	}
 
 }

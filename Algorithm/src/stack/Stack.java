@@ -24,6 +24,10 @@ public class Stack<Item> implements Iterable<Item> {
 		first = null;
 	}
 
+	public Stack(int max) {
+		
+	}
+
 	/**
 	 * push
 	 * 

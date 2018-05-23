@@ -31,10 +31,10 @@ public class BTree<Item> {
 		this.data = data;
 	}
 
-	public BTree(){
-		
+	public BTree() {
+
 	}
-	
+
 	/**
 	 * Use the method of recursion to create A tree
 	 * 
@@ -42,7 +42,7 @@ public class BTree<Item> {
 	 * @param n
 	 * @return
 	 */
-	public  BTree<Item> CreateTree(List<Item> list, int n) {
+	public BTree<Item> CreateTree(List<Item> list, int n) {
 		BTree<Item> btree = null;
 		if (n < list.size()) {
 			btree = new BTree<Item>(list.get(n));
@@ -97,64 +97,118 @@ public class BTree<Item> {
 			System.out.println("element:" + btree.data);
 		}
 	}
-	
-	
-	public void preorderByWhile(BTree<Item> btree){
+
+	public void preorderByWhile(BTree<Item> btree) {
 		Stack<BTree<Item>> stack = new Stack<BTree<Item>>();
-		do{
-			while(btree!=null){
-				System.out.println("element->data:"+btree.data);
+		do {
+			while (btree != null) {
+				System.out.println("element->data:" + btree.data);
 				stack.push_back(btree);
 				btree = btree.lchild;
 			}
-			if(!stack.isEmpty()){
+			if (!stack.isEmpty()) {
 				btree = stack.pop_back();
 				btree = btree.rchild;
 			}
-		}while(!stack.isEmpty()||btree!=null);
+		} while (!stack.isEmpty() || btree != null);
+	}
+	/**
+	 * inOrderByWhile
+	 * @param btree
+	 */
+	public void inorderByWhile(BTree<Item> btree) {
+		Stack<BTree<Item>> stack = new Stack<BTree<Item>>();
+		do {
+			while (btree != null) {
+				stack.push_back(btree);
+				btree = btree.lchild;
+			}
+			if (!stack.isEmpty()) {
+				btree = stack.pop_back();
+				System.out.println("element->data:" + btree.data);
+				btree = btree.rchild;
+			}
+		} while (!stack.isEmpty() || btree != null);
+	}
+
+	/**
+	 * postOrderByWhile
+	 * 
+	 * @param btree
+	 */
+	public void postOrderByWhile(BTree<Item> btree) {
+		int max = this.get_Depth(btree);
+		Stack<BTree<Item>> stack = new Stack<BTree<Item>>();
+		int tag[] = new int[(int) (Math.pow(2, this.get_Depth(btree)) - 1)];
+		BTree<Item> p;
+		p = btree;
+
+		do {
+			while (p != null) {// 遍历所有的左节点，入栈
+				stack.push_back(p);
+				tag[stack.size()] = 0;
+				p = p.lchild;
+			}
+			if (stack.size() > 0) {// 左右节点均已访问过，则访问该节点
+				if (tag[stack.size()] == 1) {
+					System.out.println(stack.pop_back().data);
+					p = null;
+				} else {
+					p = stack.peek();
+					if (stack.size() > 0) {
+						p = p.rchild;// 扫描右侧节点
+						tag[stack.size()] = 1;// 表示当前节点的右子树已经访问过
+					}
+				}
+			}
+		} while (p != null || stack.size() != 0);
 	}
 
 	/**
 	 * return the level of item by preorder
+	 * 
 	 * @param btree
-	 * @param item The item which is searched
-	 * @return	level
+	 * @param item
+	 *            The item which is searched
+	 * @return level
 	 */
-	public int level(BTree<Item> btree,Item item){
-		int m,n,level;
-		if(btree==null)
-			level=0;
-		else if(btree.data == item){
-			level=1;
-		}else{
-			m = level(btree.lchild,item);
-			n = level(btree.rchild,item);
-			if(m==0&&n==0)level=0;
-			else level=(m>n?m:n)+1;
+	public int level(BTree<Item> btree, Item item) {
+		int m, n, level;
+		if (btree == null)
+			level = 0;
+		else if (btree.data == item) {
+			level = 1;
+		} else {
+			m = level(btree.lchild, item);
+			n = level(btree.rchild, item);
+			if (m == 0 && n == 0)
+				level = 0;
+			else
+				level = (m > n ? m : n) + 1;
 		}
 		return level;
 	}
 
 	/**
 	 * return subtree's depth
+	 * 
 	 * @param btree
-	 * @return	subtree's depth
+	 * @return subtree's depth
 	 */
-	int get_Depth(BTree<Item> btree){
-		int m,n;
-		if(btree!=null){
-			m=get_Depth(btree.lchild);
+	int get_Depth(BTree<Item> btree) {
+		int m, n;
+		if (btree != null) {
+			m = get_Depth(btree.lchild);
 			n = get_Depth(btree.rchild);
-			return (m>n?m:n)+1;
+			return (m > n ? m : n) + 1;
 		}
 		return 0;
 	}
-	
-	
+
 	@Test
-	public void TestBTre(){
+	public void TestBTre() {
 		List<Integer> list = new ArrayList<Integer>();
-		//前置的用于充数的节点
+		// 前置的用于充数的节点
 		list.add(0);
 		list.add(1);
 		list.add(2);
@@ -162,17 +216,20 @@ public class BTree<Item> {
 		list.add(4);
 		list.add(5);
 		BTree<Integer> btree = new BTree<Integer>();
-		btree=btree.CreateTree(list, 1);
+		btree = btree.CreateTree(list, 1);
 		System.out.println("traverse  by method of inorder");
 		btree.inorder(btree);
 		System.out.println("traverse  by method of preorder");
 		btree.preorder(btree);
 		btree.preorderByWhile(btree);
+		System.out.println("traverse by postOrder begin===================");
+		btree.postOrderByWhile(btree);
+		System.out.println("traverse by postOrder end=====================");
 		System.out.println("traverse  by method of preorder");
 		btree.preorder(btree);
 		System.out.println("The depth of element '4'");
-		System.out.println(""+btree.level(btree, 4));
+		System.out.println("" + btree.level(btree, 4));
 		System.out.println("The tree's depth");
-		System.out.println(""+btree.get_Depth(btree));
+		System.out.println("" + btree.get_Depth(btree));
 	}
 }

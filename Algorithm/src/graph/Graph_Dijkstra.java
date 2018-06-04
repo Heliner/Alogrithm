@@ -52,6 +52,5 @@ public class Graph_Dijkstra {
 	void Dijkstra() {
 		int dist[] = new int[this.N_V];
 		//从一个点开始查找与其位置相近的点
-		
 	}
 }

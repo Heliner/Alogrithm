@@ -35,7 +35,6 @@ public class Stack<Item> implements Iterable<Item> {
 	 */
 	public void push_back(Item t) {
 		Node<Item> o_first = first;
-
 		first = new Node<Item>(t);
 		first.next = o_first;
 		size++;

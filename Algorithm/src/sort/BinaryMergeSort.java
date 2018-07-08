@@ -25,5 +25,4 @@ public class BinaryMergeSort {
 		merge_sort_progress(arr, mid + 1, r);
 		merge_sort(arr, L, mid, r);
 	}
-
 }

@@ -29,11 +29,17 @@ public class QuickSort {
 		}
 	}
 
+	/**
+	 * 
+	 */
+	/**
+	 * 
+	 */
 	@Test
 	public void Test() {
-		int a[]= {1,0,2,-1,-4,3};
+		int a[]= {1,0,2,-1,3,-4};
 		this.quickSort(a, 0, a.length-1);
-		for(int i =0 ;i<a.length-1;i++) {
+		for(int i =0 ;i<a.length;i++) {
 			System.out.println(a[i]);
 		}
 	}
